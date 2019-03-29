@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "definitions": {
+        "sensor_data":{
+            "$id": "#sensor_data",
+            "type":"object",
+            "properties":{
+                "enable":{
+                    "type": "boolean"
+                },
+                "path":{
+                    "type": "string"
+                },
+                "qos":{
+                    "type": "number"
+                },
+                "retain":{
+                    "type": "number"
+                }
+            },
+            "required": ["enable","path","qos","retain"]
+        }
+    },
+    "type": "object",
+    "properties":{
+        "main":	{	
+            "type": "object",
+            "properties":{
+                "name":{
+                    "type": "string"
+                },
+                "id":{
+                    "type": "string"
+                }
+            },
+            "required": ["id"]
+        },
+        "wifi": {
+            "type": "object",
+            "properties":{
+                "ssid":{
+                    "type": "string"
+                },
+                "password":{
+                    "type" : "string"
+                },
+                "max_reconnect":{
+                    "type" : "number",
+                    "default": 150,
+                    "minimum" : 1,
+                    "maximum" : 3000
+                }
+            },
+            "required": ["ssid","password","max_reconnect"]
+        },
+        "mqtt": {
+            "type": "object",
+            "properties":{
+                "uri":{
+                    "type": "string",
+                    "format": "uri"
+                },
+                "port":{
+                    "type": "number"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string",
+                    "minLength": 32,
+                    "maxLength": 32
+                },
+                "client_id": {
+                    "type": "string"
+                }
+            },
+            "required": ["username","key","client_id"]
+        },
+        "ntc10k":{
+            "allOf": [
+                {
+                    "$ref": "#sensor_data"},
+                {
+                    "properties":{  
+                        "n_samples":{
+                            "type":"number",
+                            "default": 64,
+                            "minimum": 16,
+                            "maximum": 512
+                        }
+                    },
+                    "required": ["n_samples"]
+                }
+            ]  
+        },
+        "mpu6050":{
+            "$ref": "#sensor_data"
+        }
+    }
+}
